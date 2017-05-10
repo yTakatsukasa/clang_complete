@@ -11,7 +11,7 @@ class Source(Base):
 
         self.name = 'clang_complete'
         self.mark = '[clang]'
-        self.filetypes = ['c', 'cpp', 'objc', 'objcpp']
+        self.filetypes = ['c', 'cpp', 'objc', 'objcpp', 'cuda']
         self.is_bytepos = True
         self.input_pattern = '[^. \t0-9]\.\w*'
 

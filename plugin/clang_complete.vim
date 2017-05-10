@@ -12,8 +12,8 @@ if exists('g:clang_complete_loaded')
 endif
 let g:clang_complete_loaded = 1
 
-au FileType c,cpp,objc,objcpp call <SID>ClangCompleteInit()
-au FileType c.*,cpp.*,objc.*,objcpp.* call <SID>ClangCompleteInit()
+au FileType c,cpp,objc,objcpp,cuda call <SID>ClangCompleteInit()
+au FileType c.*,cpp.*,objc.*,objcpp.*,cuda.* call <SID>ClangCompleteInit()
 
 let b:clang_parameters = ''
 let b:clang_user_options = ''
@@ -164,6 +164,9 @@ function! s:ClangCompleteInit()
 
   if &filetype == 'cpp' || &filetype == 'objcpp' || &filetype =~ 'cpp.*' || &filetype =~ 'objcpp.*'
     let b:clang_parameters .= '++'
+  elseif &filetype == 'cuda' || &filetype =~ 'cuda.*'
+    let b:clang_parameters .= 'uda'
+    let b:clang_parameters .= ' -include ' . s:plugin_path . '/clang_complete-cuda.h '
   endif
 
   if expand('%:e') =~ 'h.*'
