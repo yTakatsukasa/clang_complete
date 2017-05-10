@@ -20,7 +20,7 @@ typedef struct cudaStream *cudaStream_t;
 
 int cudaConfigureCall(dim3 gridSize, dim3 blockSize, size_t sharedSize = 0, cudaStream_t stream = 0);
 
-extern dim3 threadIdx, blockDim, gridDim;
+extern dim3 threadIdx, blockDim, blockIdx, gridDim;
 #endif
 
 #endif //CLANG_COMPLETE_CUDA_H
