@@ -148,6 +148,10 @@ function! s:ClangCompleteInit()
     let g:clang_omnicppcomplete_compliance = 0
   endif
 
+  if !exists('g:clang_cuda_path')
+    let g:clang_cuda_path = ''
+  endif
+
   if g:clang_omnicppcomplete_compliance == 1
     let g:clang_complete_auto = 0
     let g:clang_make_default_keymappings = 0
@@ -166,7 +170,11 @@ function! s:ClangCompleteInit()
     let b:clang_parameters .= '++'
   elseif &filetype == 'cuda' || &filetype =~ 'cuda.*'
     let b:clang_parameters .= 'uda'
-    let b:clang_parameters .= ' -include ' . s:plugin_path . '/clang_complete-cuda.h '
+    if g:clang_cuda_path == ''
+      let b:clang_parameters .= ' -include ' . s:plugin_path . '/clang_complete-cuda.h '
+    else
+      let b:clang_parameters .= ' --cuda-path=' . g:clang_cuda_path
+    endif
   endif
 
   if expand('%:e') =~ 'h.*'

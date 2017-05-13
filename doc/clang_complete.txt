@@ -299,6 +299,11 @@ omnicppcomplete, disables clang's auto-completion (|g:clang_complete_auto|)
 and enables only <C-X><C-U> as main clang completion function.
 Default: 0
 
+					*g:clang_cuda_path*
+Path to CUDA installed directory. For example, when '/opt/cuda/include/cuda.h' exists, set
+'/opt/cuda' to this option.
+Default: ""
+
 ==============================================================================
 6. Known issues					*clang_complete-issues*
 
