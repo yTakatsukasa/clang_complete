@@ -151,6 +151,9 @@ function! s:ClangCompleteInit()
   if !exists('g:clang_cuda_path')
     let g:clang_cuda_path = ''
   endif
+  if !exists('g:clang_cuda_arch')
+    let g:clang_cuda_arch= ''
+  endif
 
   if g:clang_omnicppcomplete_compliance == 1
     let g:clang_complete_auto = 0
@@ -173,7 +176,17 @@ function! s:ClangCompleteInit()
     if g:clang_cuda_path == ''
       let b:clang_parameters .= ' -include ' . s:plugin_path . '/clang_complete-cuda.h '
     else
+      "Load dummy header to avoid undefined symbol error
+      let b:clang_parameters .= ' -D__CLANG_CUDA_RUNTIME_WRAPPER_H__'
+      let b:clang_parameters .= ' -include ' . s:plugin_path . '/clang_dummy_nvvm_decls.h'
       let b:clang_parameters .= ' --cuda-path=' . g:clang_cuda_path
+    endif
+    let b:clang_parameters .= ' --cuda-gpu-arch='
+    if g:clang_cuda_arch == ''
+      "sm_50 is supported in various CUDA SDK
+      let b:clang_parameters .= 'sm_50'
+    else
+      let b:clang_parameters .= g:clang_cuda_arch
     endif
   endif
 
